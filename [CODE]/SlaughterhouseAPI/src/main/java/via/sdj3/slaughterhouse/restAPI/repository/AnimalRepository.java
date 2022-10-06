@@ -2,9 +2,10 @@ package via.sdj3.slaughterhouse.restAPI.repository;
 
 import org.springframework.stereotype.Repository;
 import via.sdj3.slaughterhouse.restAPI.model.Animal;
+import via.sdj3.slaughterhouse.restAPI.model.AnimalDTO;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Repository
@@ -12,9 +13,12 @@ public class AnimalRepository {
 
     private static final HashMap<Integer, Animal> animals = new HashMap<>();
 
+
     static {
         initDataSource();
     }
+
+    private int id = animals.size();
 
     private static void initDataSource() {
         Animal a1 = new Animal(1, LocalDateTime.now(), 87.5, "Hedensted");
@@ -27,21 +31,24 @@ public class AnimalRepository {
 
     }
 
-    public void create(Animal animal) throws Exception {
-        if(animal!=null)
-        {
-            animals.put(animal.getRegId(), animal);
-            return;
-        }
-        throw new Exception("Animal cannot be null.");
+    public Animal create(AnimalDTO dto) {
+        id++;
+        Animal toBeCreated = new Animal
+                (id, LocalDateTime.now(), dto.getWeight(), dto.getOrigin());
+        animals.put(toBeCreated.getRegId(), toBeCreated);
+        return toBeCreated;
     }
 
+
     public Animal getById(int regId) throws Exception {
-        if(regId>=1)
-        {
-            return animals.get(regId);
-        }
-        throw new Exception("ID has to be a positive integer.");
+
+        return animals.get(regId);
+    }
+
+    public ArrayList<Animal> getAll() {
+        ArrayList<Animal> animalsList = new ArrayList<>();
+        animalsList.addAll(animals.values());
+        return animalsList;
     }
 
     //TODO:Get all by date and get all by origin missing.
