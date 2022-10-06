@@ -3,9 +3,12 @@ package via.sdj3.slaughterhouse.restAPI;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import via.sdj3.slaughterhouse.restAPI.model.Animal;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @SpringBootApplication

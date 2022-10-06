@@ -20,11 +20,11 @@ public class AnimalApiController {
         this.animalService = animalService;
     }
 
-    @GetMapping("/get")
-    public String getById()
+    @GetMapping("/get/{id}")
+    public String getById(@PathVariable int id)
     {
         try {
-            return animalService.getById(1).toString();
+            return animalService.getById(id).toString();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
