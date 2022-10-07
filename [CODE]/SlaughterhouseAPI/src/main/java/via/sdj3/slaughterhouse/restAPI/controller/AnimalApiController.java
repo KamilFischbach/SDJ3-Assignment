@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import via.sdj3.slaughterhouse.restAPI.model.Animal;
 import via.sdj3.slaughterhouse.restAPI.model.AnimalDTO;
+import via.sdj3.slaughterhouse.restAPI.model.DateDTO;
 import via.sdj3.slaughterhouse.restAPI.service.AnimalService;
 
 import java.util.ArrayList;
@@ -23,19 +24,18 @@ public class AnimalApiController {
         this.animalService = animalService;
     }
 
-    @GetMapping("/getID/{id}")
+    @GetMapping("/animals/{id}")
     //Code was failing because there were two /get requests
     // with PathVariable, and it couldn't distinguish them
-    public String getById(@PathVariable int id)
+    public ResponseEntity<Object> getById(@PathVariable int id)
     {
         try {
             Animal animal = animalService.getById(id);
-            //return new ResponseEntity<>(animal, HttpStatus.ACCEPTED);
-            return animal.toString();
+            return new ResponseEntity<>(animal, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             String error = e.getMessage();
-            //return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-            return null;
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+            //return null;
         }
     }
     @PostMapping("/animals")
@@ -51,11 +51,25 @@ public class AnimalApiController {
         }
     }
 
-    @GetMapping("/get/{origin}")
+    @GetMapping("/animals/origin/{origin}")
     public ResponseEntity<Object> getByOrigin(@PathVariable String origin)
     {
         try{
             ArrayList<Animal> animals = animalService.getByOrigin(origin);
+            return new ResponseEntity<>(animals, HttpStatus.ACCEPTED);
+        }
+        catch(Exception e) {
+            String error = e.getMessage();
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @GetMapping("/animals/date")
+    public ResponseEntity<Object> getByDate(@RequestBody DateDTO dto)
+    {
+        try{
+            ArrayList<Animal> animals = animalService.getByDate(dto);
             return new ResponseEntity<>(animals, HttpStatus.ACCEPTED);
         }
         catch(Exception e) {
