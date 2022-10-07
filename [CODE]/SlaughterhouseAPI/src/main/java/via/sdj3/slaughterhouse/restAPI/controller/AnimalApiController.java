@@ -23,7 +23,9 @@ public class AnimalApiController {
         this.animalService = animalService;
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/getID/{id}")
+    //Code was failing because there were two /get requests
+    // with PathVariable, and it couldn't distinguish them
     public String getById(@PathVariable int id)
     {
         try {

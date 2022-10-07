@@ -27,7 +27,7 @@ public class AnimalServiceImpl implements AnimalService{
 
     @Override
     public Animal getById(int regId) throws Exception {
-        if (regId <= 1) {
+        if (regId >= 1) {
             return animalRepository.getById(regId);
         }
         throw new Exception("ID has to be a positive integer.");
@@ -35,7 +35,7 @@ public class AnimalServiceImpl implements AnimalService{
 
     @Override
     public ArrayList<Animal> getByOrigin(String origin) throws Exception {
-        if(origin!=null || origin.equals(""))
+        if(origin!=null || !origin.equals(""))
         {
             ArrayList<Animal> animals = animalRepository.getAll();
             ArrayList<Animal> animalsByOrigin = new ArrayList<>();
